@@ -1,0 +1,23 @@
+name: Node-package-ci
+on:
+  push:
+    branches:
+     - master
+jobs:
+  publish-to-gpr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup node and npm
+        uses: actions/setup-node@v1
+        with:
+             node-version: 12
+             registry-url: https://npm.pkg.github.com/
+             scope: '@janabhishek2'
+      - name: Install npm
+        run: npm install
+      - name : Publish
+        run: npm publish
+        env:
+           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
